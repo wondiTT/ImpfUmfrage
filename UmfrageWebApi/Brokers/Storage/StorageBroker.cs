@@ -69,7 +69,7 @@ namespace UmfrageWebApi.Brokers.Storage
                     .IsFixedLength(true);
 
                 entity.HasOne(d => d.PersonArt)
-                    .WithMany(p => p.People)
+                    .WithMany(p => p.Personen)
                     .HasForeignKey(d => d.PersonArtId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Person__PersonArt");

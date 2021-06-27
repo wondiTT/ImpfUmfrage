@@ -12,7 +12,7 @@ namespace UmfrageWebApi.Brokers.Storage
     {
         public async ValueTask<IQueryable<Person>> SelectAllePersonenAsync()
         {
-            var query = Personen.Include(p => p.PersonArtId).AsNoTracking().AsQueryable();
+            var query = Personen.Include(p => p.PersonArt).AsNoTracking().AsQueryable();
 
             return await Task.FromResult(query);
         }

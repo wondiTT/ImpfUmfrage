@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Brokers\Logging\" />
     <Folder Include="DbModels\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 

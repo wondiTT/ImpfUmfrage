@@ -9,7 +9,7 @@ namespace UmfrageWebApi.DbModels
     {
         public PersonArt()
         {
-            People = new HashSet<Person>();
+            Personen = new HashSet<Person>();
         }
 
         public int PersonArtId { get; set; }
@@ -17,6 +17,6 @@ namespace UmfrageWebApi.DbModels
         public DateTime LetzteAenderung { get; set; }
         public byte[] RowVersion { get; set; }
 
-        public virtual ICollection<Person> People { get; set; }
+        public virtual ICollection<Person> Personen { get; set; }
     }
 }
