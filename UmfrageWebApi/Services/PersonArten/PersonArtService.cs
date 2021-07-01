@@ -20,10 +20,10 @@ namespace UmfrageWebApi.Services.PersonArten
             this.dateTimeBroker = dateTimeBroker;
         }
 
-        public ValueTask<IQueryable<PersonArt>> AllePersonArtenAbrufenAsync() =>
+        public ValueTask<List<PersonArt>> AllePersonArtenAbrufenAsync() =>
             TryCatch(async () =>
             {
-                IQueryable<PersonArt> personartenDb = await this.storageBroker.SelectAllPersonArtAsync();
+                List<PersonArt> personartenDb = await this.storageBroker.SelectAllPersonArtAsync();
 
                 return personartenDb;
             });
@@ -31,41 +31,41 @@ namespace UmfrageWebApi.Services.PersonArten
         public ValueTask<PersonArt> PersonArtAbrufenFromIdAsync(int idPersonart) =>
         TryCatch(async () =>
         {
-            ValidateIdPerson(idPersonart);
-            Person personartDb = await this.storageBroker.SelectPersonArtFromIdAsync(idPersonart);
-            ValidateStoragePerson(personDb, idPerson);
+            ValidateIdPersonart(idPersonart);
+            PersonArt personartDb = await this.storageBroker.SelectPersonArtFromIdAsync(idPersonart);
+            ValidateStoragePersonart(personartDb, idPersonart);
 
-            return personDb;
+            return personartDb;
         });
 
         public ValueTask<PersonArt> PersonArtAendernAsync(PersonArt personart) =>
         TryCatch(async () =>
         {
-            CheckEingabePersonOnCreateOnModify(person);
-            Person personDb = await this.storageBroker.SelectPersonFromIdAsync(person.PersonId);
-            ValidateStoragePerson(personDb, person.PersonId);
-            ValidateAginstStoragePersonOnModify(person, personDb);
+            CheckEingabePersonartOnCreateOnModify(personart);
+            PersonArt personartDb = await this.storageBroker.SelectPersonArtFromIdAsync(personart.PersonArtId);
+            ValidateStoragePersonart(personartDb, personart.PersonArtId);
+            ValidateAginstStoragePersonartOnModify(personart, personartDb);
 
-            return await this.storageBroker.UpdatePersonAsync(person);
+            return await this.storageBroker.UpdatePersonArtAsync(personart);
         });
 
         public ValueTask<PersonArt> PersonArtErzeugenAsync(PersonArt personart) =>
         TryCatch(async () =>
         {
-            CheckEingabePersonOnCreateOnModify(person);
+            CheckEingabePersonartOnCreateOnModify(personart);
 
-            return await this.storageBroker.InsertPersonAsync(person);
+            return await this.storageBroker.InsertPersonArtAsync(personart);
         });
 
-        public ValueTask<bool> PersonArtLoeschenAsync(int idPerson) =>
+        public ValueTask<bool> PersonArtLoeschenAsync(int idPersonart) =>
             TryCatch(async () =>
             {
-                ValidateIdPerson(idPerson);
-                Person personDb = await this.storageBroker.SelectPersonFromIdAsync(idPerson);
-                ValidateStoragePerson(personDb, idPerson);
+                ValidateIdPersonart(idPersonart);
+                PersonArt personartDb = await this.storageBroker.SelectPersonArtFromIdAsync(idPersonart);
+                ValidateStoragePersonart(personartDb, idPersonart);
 
-                Person deletedPersonDb = await this.storageBroker.DeletePersonAsync(personDb);
-                if(deletedPersonDb != null) { return true; }
+                PersonArt deletedPersonartDb = await this.storageBroker.DeletePersonArtAsync(personartDb);
+                if (deletedPersonartDb != null) { return true; }
                 else { return false; }
             });
     }

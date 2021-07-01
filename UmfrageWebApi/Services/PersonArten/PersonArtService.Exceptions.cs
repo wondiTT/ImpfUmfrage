@@ -7,40 +7,41 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UmfrageWebApi.Models.Personart.Exceptions;
 
-namespace UmfrageWebApi.Services.Personen
+namespace UmfrageWebApi.Services.PersonArten
 {
-    public partial class PersonenService
+    public partial class PersonArtService
     {
-        private delegate ValueTask<Person> ReturningPersonFunction();
-        private delegate ValueTask<IQueryable<Person>> ReturningQueryablePersonFunction();
+        private delegate ValueTask<PersonArt> ReturningPersonartFunction();
+        private delegate ValueTask<List<PersonArt>> ReturningQueryablePersonartFunction();
         private delegate ValueTask<bool> ReturningIfSuccessFunction();
 
-        private async ValueTask<Person> TryCatch(ReturningPersonFunction returningPersonFunction)
+        private async ValueTask<PersonArt> TryCatch(ReturningPersonartFunction returningPersonartFunction)
         {
             try
             {
-                return await returningPersonFunction();
+                return await returningPersonartFunction();
             }
-            catch (NullPersonException nullPersonException)
+            catch (NullPersonartException nullPersonartException)
             {
-                throw CreateAndLogValidationException(nullPersonException);
+                throw CreateAndLogValidationException(nullPersonartException);
             }
-            catch (InvalidPersonException invalidPersonInputException)
+            catch (InvalidPersonartException invalidPersonartInputException)
             {
-                throw CreateAndLogValidationException(invalidPersonInputException);
+                throw CreateAndLogValidationException(invalidPersonartInputException);
             }
-            catch (NotFoundPersonException nullPersonException)
+            catch (NotFoundPersonartException nullPersonartException)
             {
-                throw CreateAndLogValidationException(nullPersonException);
+                throw CreateAndLogValidationException(nullPersonartException);
             }
             catch (SqlException sqlException)
             {
                 throw CreateAndLogCriticalDependencyException(sqlException);
             }
-            catch (AlreadyExistsPersonException alreadyExistsPersonException)
+            catch (AlreadyExistsPersonartException alreadyExistsPersonartException)
             {
-                throw CreateAndLogValidationException(alreadyExistsPersonException);
+                throw CreateAndLogValidationException(alreadyExistsPersonartException);
             }
             catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
             {
@@ -65,17 +66,17 @@ namespace UmfrageWebApi.Services.Personen
             {
                 return await returningIfSuccessFunction();
             }
-            catch (NullPersonException nullPersonException)
+            catch (NullPersonartException nullPersonartException)
             {
-                throw CreateAndLogValidationException(nullPersonException);
+                throw CreateAndLogValidationException(nullPersonartException);
             }
             //catch (InvalidPersonException invalidPersonInputException)
             //{
             //    throw CreateAndLogValidationException(invalidPersonInputException);
             //}
-            catch (NotFoundPersonException nullPersonException)
+            catch (NotFoundPersonartException nullPersonartException)
             {
-                throw CreateAndLogValidationException(nullPersonException);
+                throw CreateAndLogValidationException(nullPersonartException);
             }
             catch (SqlException sqlException)
             {
@@ -97,11 +98,11 @@ namespace UmfrageWebApi.Services.Personen
             }
         }
 
-        private ValueTask<IQueryable<Person>> TryCatch(ReturningQueryablePersonFunction returningQueryablePersonFunction)
+        private ValueTask<List<PersonArt>> TryCatch(ReturningQueryablePersonartFunction returningQueryablePersonartFunction)
         {
             try
             {
-                return returningQueryablePersonFunction();
+                return returningQueryablePersonartFunction();
             }
             catch (SqlException sqlException)
             {
@@ -120,36 +121,36 @@ namespace UmfrageWebApi.Services.Personen
 
 
 
-        private PersonServiceException CreateAndLogServiceException(Exception exception)
+        private PersonartServiceException CreateAndLogServiceException(Exception exception)
         {
-            var PersonServiceException = new PersonServiceException(exception);
-            //this.loggingBroker.LogError(PersonServiceException);
+            var PersonartServiceException = new PersonartServiceException(exception);
+            //this.loggingBroker.LogError(PersonartServiceException);
 
-            return PersonServiceException;
+            return PersonartServiceException;
         }
 
-        private PersonDependencyException CreateAndLogDependencyException(Exception exception)
+        private PersonartDependencyException CreateAndLogDependencyException(Exception exception)
         {
-            var PersonDependencyException = new PersonDependencyException(exception);
+            var PersonartDependencyException = new PersonartDependencyException(exception);
             //this.loggingBroker.LogError(PersonDependencyException);
 
-            return PersonDependencyException;
+            return PersonartDependencyException;
         }
 
-        private PersonDependencyException CreateAndLogCriticalDependencyException(Exception exception)
+        private PersonartDependencyException CreateAndLogCriticalDependencyException(Exception exception)
         {
-            var PersonDependencyException = new PersonDependencyException(exception);
+            var PersonartDependencyException = new PersonartDependencyException(exception);
             //this.loggingBroker.LogCritical(PersonDependencyException);
 
-            return PersonDependencyException;
+            return PersonartDependencyException;
         }
 
-        private PersonValidationException CreateAndLogValidationException(Exception exception)
+        private PersonartValidationException CreateAndLogValidationException(Exception exception)
         {
-            var PersonValidationException = new PersonValidationException(exception);
+            var PersonartValidationException = new PersonartValidationException(exception);
             //this.loggingBroker.LogError(PersonValidationException);
 
-            return PersonValidationException;
+            return PersonartValidationException;
         }
     }
 }

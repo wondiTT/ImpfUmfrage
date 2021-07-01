@@ -9,9 +9,9 @@ namespace UmfrageWebApi.Services.PersonArten
 {
     public interface IPersonArtService
     {
-        public ValueTask<IQueryable<PersonArt>> AllePersonArtenAbrufenAsync();
+        public ValueTask<List<PersonArt>> AllePersonArtenAbrufenAsync();
         public ValueTask<PersonArt> PersonArtAbrufenFromIdAsync(int idPersonArt);
-        public ValueTask<PersonArt> PersonArtErzeugenAsync(Person person);
+        public ValueTask<PersonArt> PersonArtErzeugenAsync(PersonArt person);
         public ValueTask<bool> PersonArtLoeschenAsync(int idPersonArt);
         public ValueTask<PersonArt> PersonArtAendernAsync(PersonArt personart);
     }

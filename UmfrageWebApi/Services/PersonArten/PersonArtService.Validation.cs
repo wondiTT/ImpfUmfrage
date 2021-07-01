@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UmfrageWebApi.Models.Personart;
+using UmfrageWebApi.Models.Personart.Exceptions;
 
 namespace UmfrageWebApi.Services.PersonArten
 {
-    public partial class PersonenService
+    public partial class PersonArtService
     {
 
         private bool IsDateNotRecent(DateTimeOffset dateTime)
@@ -20,35 +22,35 @@ namespace UmfrageWebApi.Services.PersonArten
             return Math.Abs(difference.TotalMinutes) > oneMinute;
         }
 
-        private static void ValidateStoragePerson(Person storagePerson, int idPerson)
+        private static void ValidateStoragePersonart(PersonArt storagePersonart, int idPersonart)
         {
-            if (storagePerson == null)
+            if (storagePersonart == null)
             {
-                throw new NotFoundPersonException(idPerson);
+                throw new NotFoundPersonException(idPersonart);
             }
         }
 
-        private static void ValidatePerson(PersonModel person)
+        private static void ValidatePersonart(PersonArtModel personart)
         {
-            if (person is null)
+            if (personart is null)
             {
                 throw new NullPersonException();
             }
         }
 
-        private static void CheckEingabePersonOnCreateOnModify(Person person)
+        private static void CheckEingabePersonartOnCreateOnModify(PersonArt personart)
         {
-            
+
         }
 
-        public void ValidateAginstStoragePersonOnModify(Person inputPerson, Person storagePerson)
+        public void ValidateAginstStoragePersonartOnModify(PersonArt inputPersonart, PersonArt storagePersonart)
         {
-           
+
         }
 
-        private static void ValidateIdPerson(int idPerson)
+        private static void ValidateIdPersonart(int idPersonart)
         {
-            if (!(idPerson > 0)){ throw new InvalidPersonException(); }
+            if (!(idPersonart > 0)) { throw new InvalidPersonartException(); }
         }
         private static bool IsInvalid(string input) => String.IsNullOrWhiteSpace(input);
         private static bool IsInvalid(DateTimeOffset date) => date == default;
