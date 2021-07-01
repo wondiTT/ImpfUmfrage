@@ -40,7 +40,10 @@ namespace UmfrageWebApi.Services.PersonArten
 
         private static void CheckEingabePersonartOnCreateOnModify(PersonArt personart)
         {
-
+            if (IsInvalid(personart.Beschreibung))
+            {
+                throw new InvalidPersonException();
+            }
         }
 
         public void ValidateAginstStoragePersonartOnModify(PersonArt inputPersonart, PersonArt storagePersonart)

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,12 +40,18 @@ namespace UmfrageWebApi
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             });
 
-            //SetDbContext(services);
+            SetDbContext(services);
             services.AddTransient<IDateTimeBroker, DateTimeBroker>();
             services.AddScoped<IStorageBroker, StorageBroker>();
             services.AddTransient<IPersonenService, PersonenService>();
             services.AddTransient<IPersonArtService, PersonArtService>();
 
+        }
+
+        private void SetDbContext(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("Umfrage");
+            services.AddDbContext<StorageBroker>(o => o.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

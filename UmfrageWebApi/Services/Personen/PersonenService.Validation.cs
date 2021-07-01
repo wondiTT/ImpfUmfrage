@@ -38,7 +38,10 @@ namespace UmfrageWebApi.Services.Personen
 
         private static void CheckEingabePersonOnCreateOnModify(Person person)
         {
-            
+            if (IsInvalid(person.Nachname) || IsInvalid(person.Vorname) || IsInvalid(person.Ausweisnummer) || IsInvalid(person.Geburtsdatum) || IsInvalidId(person.PersonArtId) || IsInvalidBit(person.Geimpft))
+            {
+                throw new InvalidPersonException();
+            }
         }
 
         public void ValidateAginstStoragePersonOnModify(Person inputPerson, Person storagePerson)
@@ -52,5 +55,7 @@ namespace UmfrageWebApi.Services.Personen
         }
         private static bool IsInvalid(string input) => String.IsNullOrWhiteSpace(input);
         private static bool IsInvalid(DateTimeOffset date) => date == default;
+        private static bool IsInvalidId(int input) => input > 0;
+        private static bool IsInvalidBit(bool input) => input is true || input is false;
     }
 }

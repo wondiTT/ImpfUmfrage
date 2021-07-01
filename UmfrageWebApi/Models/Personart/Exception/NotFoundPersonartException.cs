@@ -7,7 +7,7 @@ namespace UmfrageWebApi.Models.Personart.Exceptions
 {
     public class NotFoundPersonartException : Exception    
     {
-        public NotFoundPersonartException(int idPerson)
-            :base($"Personart mit der Id: {idPerson} nicht gefunden.") { }
+        public NotFoundPersonartException(int idPersonart)
+            :base($"Personart mit der Id: {idPersonart} nicht gefunden.") { }
     }
 }
